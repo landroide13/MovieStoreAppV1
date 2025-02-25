@@ -1,0 +1,34 @@
+<ns-action-bar title="Movie App" [showBackBtn]="true">
+  <ActionItem ios.position="right">
+    <Label text="&#xf2f5;" class="fas icon" (tap)="logout()"></Label>
+  </ActionItem>
+</ns-action-bar>
+
+<StackLayout class="page">
+
+  <StackLayout class="p-6">
+    <Image src="~/assets/logo.png" ></Image>
+  </StackLayout>
+  
+
+  <StackLayout height="45%">
+    <ListView [items]="movies"  height="100%">
+      <ng-template let-item="item">
+        <StackLayout [nsRouterLink]="['/movie', item.id]">
+          <Label [text]="item.name" class="p-4 text-lg"></Label>
+        </StackLayout>
+      </ng-template>
+    </ListView>
+  </StackLayout>
+
+  <StackLayout height="50%">
+    <Button 
+      text="New Movie" 
+      (tap)="newMovie()"
+      style="background-color: #222122; color: white"
+      class="text-lg font-semibold"
+      ></Button>
+  </StackLayout>
+     
+
+</StackLayout>

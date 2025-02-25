@@ -1,0 +1,37 @@
+<ns-action-bar title="Movie App" [showBackBtn]="false"></ns-action-bar>
+
+<StackLayout class="page">
+
+    <StackLayout class="m-4">
+        
+        <StackLayout >
+            <Label class="text-lg" text="Username" ></Label>
+            <TextField [(ngModel)]="auth.username"></TextField>
+        </StackLayout>
+            
+        <StackLayout *ngIf="registerMode">
+            <Label class="text-lg" text="Email"></Label>
+            <TextField [(ngModel)]="auth.email"></TextField>
+        </StackLayout>
+        
+        <StackLayout>
+            <Label class="text-lg" text="Password"></Label>
+            <TextField [(ngModel)]="auth.password" secure="true"></TextField>
+        </StackLayout>
+    
+    </StackLayout>
+
+    <StackLayout>
+        <Button 
+        text="{{ registerMode ? 'Register' : 'Login' }}" 
+        class="text-lg font-semibold text-gray"
+        (tap)="submit()"
+        style="background-color: #222122; color: white"
+       
+        ></Button>
+
+        <Label *ngIf="!registerMode" (tap)="changeMode()" text="Don't have an account yet ? Register here"></Label>
+        <Label *ngIf="registerMode" (tap)="changeMode()" text="You have an account ? Login here"></Label>
+    </StackLayout>
+    
+</StackLayout>

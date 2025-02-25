@@ -1,0 +1,44 @@
+<ns-action-bar title="{{ movie()?.name }}" [showBackBtn]="true">
+    <ActionItem ios.position="right" (tap)="editRate()">
+        <Label text="&#xf304;" class="fas icon"></Label>
+    </ActionItem>
+</ns-action-bar>
+
+<StackLayout class="page">
+
+    <StackLayout orientation="horizontal" class="my-6">
+        <Label  class="text-xl font-semibold text-center " text="Movie Rating:   "></Label>
+        
+        <Label class="fas" text="&#xf005;" [ngClass]="{ 'orange' : movie().avg_rating > 0 }"></Label>
+        <Label class="fas" text="&#xf005;" [ngClass]="{ 'orange' : movie().avg_rating > 1 }"></Label>
+        <Label class="fas" text="&#xf005;" [ngClass]="{ 'orange' : movie().avg_rating > 2 }"></Label>
+        <Label class="fas" text="&#xf005;" [ngClass]="{ 'orange' : movie().avg_rating > 3 }"></Label>
+        <Label class="fas" text="&#xf005;" [ngClass]="{ 'orange' : movie().avg_rating > 4 }"></Label>
+        <Label  class="font-medium text-center text-gray-700" text="({{ movie().no_of_ratings }})"></Label>
+    </StackLayout>
+
+    <StackLayout class="my-8">
+        <Label  class="text-xl font-semibold text-center text-gray-500" text="Description"></Label>
+        <Label class="text-lg" [text]="movie()?.description"></Label>
+    </StackLayout>
+
+    <StackLayout orientation="vertical">
+
+        <Label  class="my-4 text-xl font-semibold text-center gray-800" text="RATE IT"></Label>
+        
+       
+        <StackLayout orientation="horizontal" class="flex items-center my-6">
+            <Label *ngFor="let rate of [1,2,3,4,5]" 
+                text="&#xf005;" 
+                (tap)="setHighLight(rate)"
+                [ngClass]="{ 'fas text-xl font-medium purple' : highLight >= rate, 'far text-xl font-medium' : highLight < rate }"></Label>
+        </StackLayout>
+        
+        <Button text="Rate" 
+                style="background-color: #222122; color: white" 
+                class="px-4 text-md btn"
+                (tap)="rateBtn()"></Button>
+                
+    </StackLayout>
+
+</StackLayout>

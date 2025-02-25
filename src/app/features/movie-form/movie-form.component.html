@@ -1,0 +1,37 @@
+<ns-action-bar title="{{ movie().id ? movieName : 'Create Movie' }}" [showBackBtn]="true"></ns-action-bar>
+
+<StackLayout *ngIf="movie()"  class="page">
+    
+    <StackLayout class="p-4">
+        <StackLayout class="p-2">
+            <Label class="text-lg" text="Name"></Label>
+            <TextField [text]="movie().name" (input)="updateMovieName($event.target.value)"></TextField>
+        </StackLayout>
+       
+        <StackLayout class="p-2">
+            <Label class="text-lg" text="Description"></Label>
+            <TextView [text]="movie().description" 
+                (input)="updateMovieDescription($event.target.value)"
+            ></TextView>
+        </StackLayout>
+        
+        <StackLayout>
+            <Button text="{{ movie().id ? 'Update' : 'Add' }}" 
+                (tap)="saveForm()"
+                style="background-color: #222122; color: white"
+                ></Button>
+            <Button *ngIf="movie().id" 
+                text="Delete" 
+                (tap)="delete()"
+                style="background-color: #222122; color: white"
+                ></Button>
+        </StackLayout>
+    </StackLayout>
+    
+</StackLayout>
+
+ 
+
+
+
+

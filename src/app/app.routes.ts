@@ -1,9 +1,23 @@
 import { Routes } from '@angular/router';
-import { ItemsComponent } from './item/items.component';
-import { ItemDetailComponent } from './item/item-detail.component';
+
+import { AuthComponent } from './features/auth/auth.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/items', pathMatch: 'full' },
-  { path: 'items', component: ItemsComponent },
-  { path: 'item/:id', component: ItemDetailComponent },
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: 'auth', component: AuthComponent },
+
+  { path: 'movies', 
+    loadComponent: () => import('../app/features/movie/movie.component').then(c => c.MovieComponent)
+  },
+
+  { path: 'movie/:id', 
+    loadComponent: () => import('../app/features/movie/movie-details/movie-detail.component').then(c => c.MovieDetailComponent)
+  },
+
+  {
+    path: 'edit/:id',
+    loadComponent: () => import('../app/features/movie-form/movie-form.component').then(c => c.MovieFormComponent)
+  }
+
+
 ];

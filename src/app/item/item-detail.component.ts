@@ -10,7 +10,7 @@ import { ItemService } from './item.service'
   imports: [NativeScriptCommonModule],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ItemDetailComponent implements OnInit {
+export class ItemDetailComponent implements OnInit { 
   itemService = inject(ItemService)
   route = inject(ActivatedRoute)
   item = signal<Item>(null)
