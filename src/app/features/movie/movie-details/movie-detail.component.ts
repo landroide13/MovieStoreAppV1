@@ -20,6 +20,7 @@ import { throwError } from 'rxjs';
 
     route = inject(ActivatedRoute)
     router = inject(Router)
+    routerEx = inject(RouterExtensions)
     movie: Movie
     highLight: number
 
@@ -54,6 +55,8 @@ import { throwError } from 'rxjs';
         data => {
           this.movie = data
           this.getDetails(this.movie.id)
+          this.getDialog('Movie Rated')
+          this.routerEx.navigate(['/movies'], { clearHistory: true })
           console.log('Movie Id:', this.movie.id);
         },
         error => {
