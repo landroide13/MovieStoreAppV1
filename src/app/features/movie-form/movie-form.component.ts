@@ -4,7 +4,6 @@ import { ActionBarComponent } from '../../shared/action-bar/action-bar.component
 import { MovieService } from '../../core/services/movie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../../core/models/models';
-import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'ns-movie-form',
@@ -15,13 +14,13 @@ import { FormsModule } from '@angular/forms';
             NativeScriptFormsModule,
             NativeScriptRouterModule],
     schemas: [NO_ERRORS_SCHEMA],
-  })
+  }) 
   export class MovieFormComponent {
 
     movieService = inject(MovieService)
-    movie = signal<Movie>({ name: '', description: '' })
+    movie: Movie = { name: '', description: '' }
     route = inject(ActivatedRoute)
-    router = inject(Router)
+    router = inject(RouterExtensions)
     movieName: string;
 
     ngOnInit(): void {
@@ -29,50 +28,41 @@ import { FormsModule } from '@angular/forms';
         if(id >= 0){
             this.getDetails(id)
         }else{
-            this.movie()
+            this.movie
         }
     }
 
     getDetails(id: number){
-        this.movieService.getMovie(id)
-        this.movieName = this.movie().name
-    }
-
-    updateMovieName(newName: string) {
-        if (this.movie()) {
-            this.movie.update(movie => ({ ...movie!, name: newName })); 
-        }
-    }
-
-    updateMovieDescription(newDesc: string) {
-        if (this.movie()) {
-            this.movie.update(movie => ({ ...movie!, description: newDesc })); 
-        }
+        this.movieService.getMovie(id).subscribe(
+            res => this.movie = res,
+            err => console.log(err)
+        )
+        this.movieName = this.movie.name
     }
 
     upDate(){
-        this.movieService.updateMovie(this.movie().id, this.movie().name, this.movie().description).subscribe(
-            result => this.router.navigate(['/movies']),
+        this.movieService.updateMovie(this.movie.id, this.movie.name, this.movie.description).subscribe(
+            result => this.router.navigate(['/movies'], { clearHistory: true }),
             err => console.log(err)
         )
     }
 
     create(){
-        this.movieService.createMovie(this.movie().name, this.movie().description).subscribe(
-            result => this.router.navigate(['/movies']),
-            err => console.log(err)
+        this.movieService.createMovie(this.movie.name, this.movie.description).subscribe(
+            result => this.router.navigate(['/movies'], { clearHistory: true }),
+            err => console.log(err.error)
         )
-    }
+    }  
 
     delete(){
-        this.movieService.deleteMovie(this.movie().id).subscribe(
-            result => this.router.navigate(['/movies']),
+        this.movieService.deleteMovie(this.movie.id).subscribe(
+            result => this.router.navigate(['/movies'], { clearHistory: true }),
             err => console.log(err)
         )
     }
 
     saveForm(){
-       if(this.movie().id){
+       if(this.movie.id){
         this.upDate()
        }else{
         this.create()

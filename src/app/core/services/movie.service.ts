@@ -20,41 +20,27 @@ export class MovieService {
         private httpClient: HttpClient,
         //private cookieService: CookieService
     ) { }
-    
-    // movies = signal<Movie[]>([
-    //     { id: 1, name: 'Batman', description: 'Super Hero Movie',no_of_ratings: 5, avg_rating: 4 },
-    //     { id: 2, name: 'Tenet', description: 'Fiction Movie',  no_of_ratings: 3, avg_rating: 3 },
-    //     { id: 3, name: 'Interstellar', description: 'Space Movie',  no_of_ratings: 4, avg_rating: 4 },
-    // ])
-
-    // getMovies(){
-    //     return this.movies
-    // }
-
-    // getMovie(id: number): Movie{
-    //     return this.movies().find(movie => movie.id === id)!
-    // }
 
     getMovies() {
         return this.httpClient.get<Movie[]>(`${this.baseMovieUrl}/movies/`, {headers: this.getAuthHeaders()});
     }
-
+    
     getMovie(id: number) {
-        return this.httpClient.get<Movie>(`${this.baseMovieUrl}/movies/${id}`, {headers: this.getAuthHeaders()});
+        return this.httpClient.get<Movie>(`${this.baseMovieUrl}/movies/${id}/`, {headers: this.getAuthHeaders()});
     }
 
-    createMovie(title: string, description: string) {
-        const body = JSON.stringify({title, description});
+    createMovie(name: string, description: string) {
+        const body = JSON.stringify({name, description});
         return this.httpClient.post(`${this.baseMovieUrl}/movies/`, body, {headers: this.getAuthHeaders()});
     }
 
     updateMovie(id: number, name: string, description: string) {
         const body = JSON.stringify({name, description});
-        return this.httpClient.put(`${this.baseMovieUrl}/movies/${id}`, body, {headers: this.getAuthHeaders()});
+        return this.httpClient.put(`${this.baseMovieUrl}/movies/${id}/`, body, {headers: this.getAuthHeaders()});
     }
 
     deleteMovie(id: number) {
-        return this.httpClient.delete(`${this.baseMovieUrl}/movies/${id}`, {headers: this.getAuthHeaders()});
+        return this.httpClient.delete(`${this.baseMovieUrl}/movies/${id}/`, {headers: this.getAuthHeaders()});
     }
     
     rateMovie(rate: number, movieId: number) {
@@ -79,6 +65,5 @@ export class MovieService {
           Authorization: `Token ${token}`
         });
     }
-
 
 }

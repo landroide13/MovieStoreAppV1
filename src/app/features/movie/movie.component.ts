@@ -44,7 +44,7 @@ import { getString, setString, remove, clear } from '@nativescript/core/applicat
     getMovies(){
       this.movieServ.getMovies().subscribe(
         (res: Movie[]) => { 
-          console.log(`Movies: ${res[0].name}`)
+          console.log(`Movies: ${res[0]}`)
           this.movies = res
         }
       )
